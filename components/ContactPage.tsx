@@ -1,141 +1,135 @@
 import React, { useState } from "react";
-import { CheckCircle2, MapPin, Mail, Phone } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { CheckCircle2, MapPin, Mail, Phone, Building } from "lucide-react";
+
+const ContactInfoItem: React.FC<{ icon: React.ReactElement; title: string; children: React.ReactNode; }> = ({ icon, title, children }) => (
+    <div className="flex items-start">
+        <div className="flex-shrink-0 h-12 w-12 flex items-center justify-center rounded-full bg-blue-100 text-brand-blue">
+            {icon}
+        </div>
+        <div className="ml-4">
+            <h3 className="text-lg font-semibold text-slate-900">{title}</h3>
+            <div className="mt-1 text-slate-600">{children}</div>
+        </div>
+    </div>
+);
 
 const ContactPage: React.FC = () => {
-  const [status, setStatus] = useState<"idle" | "submitting" | "submitted">(
-    "idle"
-  );
+    const [status, setStatus] = useState<"idle" | "submitting" | "submitted">("idle");
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setStatus("submitting");
-    setTimeout(() => {
-      setStatus("submitted");
-    }, 1500);
-  };
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        setStatus("submitting");
+        setTimeout(() => {
+            setStatus("submitted");
+        }, 1500);
+    };
 
-  return (
-    <div className="bg-white py-16 animate-fadeIn">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-brand-black tracking-tight">
-            Get in Touch
-          </h1>
-          <p className="mt-4 max-w-2xl mx-auto text-lg text-gray-600">
-            Have a ServiceNow project in mind or want to learn how the Now
-            Platform can transform your business? We'd love to hear from you.
-          </p>
+    return (
+        <div className="bg-slate-50 animate-fadeIn">
+            {/* Hero Section */}
+            <section className="py-20 md:py-28 bg-white border-b border-slate-200">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6 }}
+                        className="text-center"
+                    >
+                        <h1 className="text-4xl md:text-5xl font-bold text-slate-900 tracking-tight">Get in Touch</h1>
+                        <p className="mt-4 max-w-3xl mx-auto text-lg text-slate-600">
+                            Have a ServiceNow project in mind or want to learn how we can help transform your business? We'd love to hear from you.
+                        </p>
+                    </motion.div>
+                </div>
+            </section>
+
+            {/* Main Content Section */}
+            <section className="py-20">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="grid lg:grid-cols-12 gap-16">
+                        {/* Contact Info */}
+                        <motion.div 
+                            initial={{ opacity: 0, x: -20 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.6 }}
+                            className="lg:col-span-5"
+                        >
+                            <h2 className="text-3xl font-bold text-slate-900 mb-8">Contact Information</h2>
+                            <div className="space-y-8">
+                                <ContactInfoItem icon={<Building size={24} />} title="Our Office">
+                                    <p>Infantry Rd, Shivaji Nagar</p>
+                                    <p>Bengaluru, Karnataka 560001</p>
+                                </ContactInfoItem>
+                                <ContactInfoItem icon={<Mail size={24} />} title="Email Us">
+                                    <a href="mailto:cloudadeptsystems@gmail.com" className="hover:text-brand-blue transition">cloudadeptsystems@gmail.com</a>
+                                </ContactInfoItem>
+                                <ContactInfoItem icon={<Phone size={24} />} title="Call Us">
+                                    <a href="tel:+917032565006" className="hover:text-brand-blue transition">(+91) 703-256-5006</a>
+                                </ContactInfoItem>
+                            </div>
+                            <div className="mt-12 rounded-lg overflow-hidden h-64 shadow-md bg-slate-200 flex items-center justify-center">
+                                <img src="https://img-wrapper.vercel.app/image?url=https://placehold.co/800x600/e2e8f0/64748b?text=Our+Location" alt="Map showing office location" className="w-full h-full object-cover"/>
+                            </div>
+                        </motion.div>
+
+                        {/* Contact Form */}
+                        <motion.div 
+                            initial={{ opacity: 0, x: 20 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.6, delay: 0.2 }}
+                            className="lg:col-span-7 bg-white p-8 sm:p-12 rounded-xl shadow-lg"
+                        >
+                            <AnimatePresence mode="wait">
+                                {status === "submitted" ? (
+                                    <motion.div
+                                        key="submitted"
+                                        initial={{ opacity: 0, scale: 0.8 }}
+                                        animate={{ opacity: 1, scale: 1 }}
+                                        exit={{ opacity: 0, scale: 0.8 }}
+                                        className="text-center py-12"
+                                    >
+                                        <CheckCircle2 className="mx-auto h-16 w-16 text-green-500" strokeWidth={1.5} />
+                                        <h3 className="mt-4 text-2xl font-semibold text-slate-900">Thank You!</h3>
+                                        <p className="mt-2 text-slate-600">Your message has been sent. We'll get back to you shortly.</p>
+                                    </motion.div>
+                                ) : (
+                                    <motion.form
+                                        key="form"
+                                        initial={{ opacity: 0 }}
+                                        animate={{ opacity: 1 }}
+                                        onSubmit={handleSubmit}
+                                        className="space-y-6"
+                                    >
+                                        <h3 className="text-2xl font-bold text-slate-900 mb-4">Send us a Message</h3>
+                                        <div>
+                                            <label htmlFor="contact-name" className="block text-sm font-medium text-slate-700">Full Name</label>
+                                            <input type="text" name="name" id="contact-name" required className="mt-1 block w-full px-4 py-3 border border-slate-300 rounded-md shadow-sm focus:ring-brand-blue focus:border-brand-blue" />
+                                        </div>
+                                        <div>
+                                            <label htmlFor="contact-email" className="block text-sm font-medium text-slate-700">Email Address</label>
+                                            <input type="email" name="email" id="contact-email" required className="mt-1 block w-full px-4 py-3 border border-slate-300 rounded-md shadow-sm focus:ring-brand-blue focus:border-brand-blue" />
+                                        </div>
+                                        <div>
+                                            <label htmlFor="contact-message" className="block text-sm font-medium text-slate-700">Message</label>
+                                            <textarea id="contact-message" name="message" rows={4} required placeholder="Tell us about your ServiceNow needs..." className="mt-1 block w-full px-4 py-3 border border-slate-300 rounded-md shadow-sm focus:ring-brand-blue focus:border-brand-blue"></textarea>
+                                        </div>
+                                        <div>
+                                            <button type="submit" disabled={status === "submitting"} className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-lg font-medium text-white bg-brand-blue hover:bg-navy-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-blue disabled:bg-slate-400 transition-all transform hover:scale-105">
+                                                {status === "submitting" ? "Sending..." : "Send Message"}
+                                            </button>
+                                        </div>
+                                    </motion.form>
+                                )}
+                            </AnimatePresence>
+                        </motion.div>
+                    </div>
+                </div>
+            </section>
         </div>
-
-        <div className="grid md:grid-cols-2 gap-16 items-start">
-          {/* Contact Form */}
-          <div className="bg-gray-50 p-8 rounded-lg shadow-sm">
-            {status === "submitted" ? (
-              <div className="text-center py-12">
-                <CheckCircle2 className="mx-auto h-16 w-16 text-green-500" strokeWidth={1.5} />
-                <h3 className="mt-4 text-2xl font-semibold text-brand-black">
-                  Thank You!
-                </h3>
-                <p className="mt-2 text-gray-600">
-                  Your message has been sent. We will get back to you shortly.
-                </p>
-              </div>
-            ) : (
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div>
-                  <label
-                    htmlFor="name"
-                    className="block text-sm font-medium text-gray-700"
-                  >
-                    Full Name
-                  </label>
-                  <input
-                    type="text"
-                    name="name"
-                    id="name"
-                    required
-                    className="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-md shadow-sm focus:ring-brand-blue focus:border-brand-blue"
-                  />
-                </div>
-                <div>
-                  <label
-                    htmlFor="email"
-                    className="block text-sm font-medium text-gray-700"
-                  >
-                    Email Address
-                  </label>
-                  <input
-                    type="email"
-                    name="email"
-                    id="email"
-                    required
-                    className="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-md shadow-sm focus:ring-brand-blue focus:border-brand-blue"
-                  />
-                </div>
-                <div>
-                  <label
-                    htmlFor="message"
-                    className="block text-sm font-medium text-gray-700"
-                  >
-                    Message
-                  </label>
-                  <textarea
-                    id="message"
-                    name="message"
-                    rows={4}
-                    required
-                    className="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-md shadow-sm focus:ring-brand-blue focus:border-brand-blue"
-                    placeholder="Tell us about your ServiceNow needs..."
-                  ></textarea>
-                </div>
-                <div>
-                  <button
-                    type="submit"
-                    disabled={status === "submitting"}
-                    className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-lg font-medium text-white bg-brand-blue hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-blue disabled:bg-gray-400"
-                  >
-                    {status === "submitting" ? "Sending..." : "Send Message"}
-                  </button>
-                </div>
-              </form>
-            )}
-          </div>
-
-          {/* Contact Info */}
-          <div className="space-y-8">
-            <div>
-              <h3 className="text-lg font-semibold text-brand-black flex items-center">
-                <MapPin className="h-6 w-6 text-brand-blue mr-3" />
-                Our Office
-              </h3>
-              <p className="mt-1 text-gray-600">
-                123 Cloud Way, Suite 500
-                <br />
-                Tech City, TX 75001
-              </p>
-            </div>
-            <div>
-              <h3 className="text-lg font-semibold text-brand-black flex items-center">
-                <Mail className="h-6 w-6 text-brand-blue mr-3" />
-                Email Us
-              </h3>
-              <p className="mt-1 text-gray-600">contact@cloudadept.com</p>
-            </div>
-            <div>
-              <h3 className="text-lg font-semibold text-brand-black flex items-center">
-                <Phone className="h-6 w-6 text-brand-blue mr-3" />
-                Call Us
-              </h3>
-              <p className="mt-1 text-gray-600">(123) 456-7890</p>
-            </div>
-            {/* <div className="rounded-lg overflow-hidden h-64 shadow-md">
-                            <img src="https://picsum.photos/800/400?random=map" alt="Map showing the location of the CloudAdept Systems office" className="w-full h-full object-cover" />
-                        </div> */}
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+    );
 };
 
 export default ContactPage;
