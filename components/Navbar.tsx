@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import Logo from './Logo';
+import { ChevronDown, Menu, X } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const serviceLinks = [
     { name: 'ITSM', path: '/services/itsm' },
@@ -72,24 +74,30 @@ const Navbar: React.FC = () => {
                   aria-expanded={isServicesMenuOpen}
                 >
                   Services
-                  <svg className={`ml-1 h-5 w-5 transform transition-transform duration-200 ${isServicesMenuOpen ? 'rotate-180' : ''}`} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                      <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
-                  </svg>
+                  <ChevronDown className={`ml-1 h-5 w-5 transform transition-transform duration-200 ${isServicesMenuOpen ? 'rotate-180' : ''}`} />
                 </NavLink>
-                {isServicesMenuOpen && (
-                  <div className="absolute top-full left-1/2 -translate-x-1/2 mt-1 w-60 bg-white rounded-md shadow-lg py-1 z-20 ring-1 ring-black ring-opacity-5">
-                    {serviceLinks.map(link => (
-                      <Link
-                        key={link.name}
-                        to={link.path}
-                        onClick={() => setServicesMenuOpen(false)}
-                        className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-brand-blue transition-colors"
-                      >
-                        {link.name}
-                      </Link>
-                    ))}
-                  </div>
-                )}
+                <AnimatePresence>
+                  {isServicesMenuOpen && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: 10 }}
+                      transition={{ duration: 0.2 }}
+                      className="absolute top-full left-0 mt-2 w-60 bg-white rounded-lg shadow-xl py-2 z-20"
+                    >
+                      {serviceLinks.map(link => (
+                        <Link
+                          key={link.name}
+                          to={link.path}
+                          onClick={() => setServicesMenuOpen(false)}
+                          className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-slate-100 hover:text-brand-blue transition-colors"
+                        >
+                          {link.name}
+                        </Link>
+                      ))}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
 
               <CustomNavLink to="/contact">Contact</CustomNavLink>
@@ -113,13 +121,9 @@ const Navbar: React.FC = () => {
             >
               <span className="sr-only">Open main menu</span>
               {!isOpen ? (
-                <svg className="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
+                <Menu className="block h-6 w-6" aria-hidden="true" />
               ) : (
-                <svg className="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-                </svg>
+                <X className="block h-6 w-6" aria-hidden="true" />
               )}
             </button>
           </div>
@@ -145,9 +149,7 @@ const Navbar: React.FC = () => {
                 aria-expanded={isMobileServicesMenuOpen}
               >
                 <span>Services</span>
-                <svg className={`w-5 h-5 transform transition-transform duration-200 ${isMobileServicesMenuOpen ? 'rotate-180' : ''}`} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                  <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
-                </svg>
+                <ChevronDown className={`w-5 h-5 transform transition-transform duration-200 ${isMobileServicesMenuOpen ? 'rotate-180' : ''}`} />
               </NavLink>
               {isMobileServicesMenuOpen && (
                 <div className="pl-7 mt-1 space-y-1">

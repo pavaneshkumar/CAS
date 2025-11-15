@@ -4,21 +4,21 @@ import { Link } from 'react-router-dom';
 interface ServicePageLayoutProps {
   title: string;
   description: string;
-  imageUrl: string;
   children: React.ReactNode;
 }
 
-const ServicePageLayout: React.FC<ServicePageLayoutProps> = ({ title, description, imageUrl, children }) => {
+const ServicePageLayout: React.FC<ServicePageLayoutProps> = ({ title, description, children }) => {
   return (
     <div className="animate-fadeIn">
       {/* Hero Section */}
-      <section className="relative bg-brand-black text-white py-24 md:py-32">
-        <div className="absolute inset-0">
-          <img src={imageUrl} alt={title} className="w-full h-full object-cover opacity-30" />
-        </div>
+      <section className="relative bg-brand-blue text-white py-24 md:py-32 overflow-hidden">
+        {/* Decorative shapes */}
+        <div className="absolute top-0 left-0 w-64 h-64 bg-white/10 rounded-full -translate-x-1/2 -translate-y-1/2" aria-hidden="true"></div>
+        <div className="absolute bottom-0 right-0 w-96 h-96 bg-white/5 rounded-full translate-x-1/2 translate-y-1/2" aria-hidden="true"></div>
+
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-4xl md:text-5xl font-bold tracking-tight">{title}</h1>
-          <p className="mt-4 max-w-3xl mx-auto text-lg text-gray-300">{description}</p>
+          <p className="mt-4 max-w-3xl mx-auto text-lg text-blue-100">{description}</p>
         </div>
       </section>
 

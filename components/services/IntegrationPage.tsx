@@ -1,5 +1,6 @@
 import React from 'react';
 import ServicePageLayout from './ServicePageLayout';
+import { CheckCircle2 } from 'lucide-react';
 
 const CaseStudy: React.FC<{ title: string; industry: string; challenge: string; solution: string; result: string; }> = ({ title, industry, challenge, solution, result }) => (
     <div className="bg-blue-50 border border-blue-200 rounded-lg p-8 mt-12">
@@ -27,7 +28,6 @@ const IntegrationPage: React.FC = () => {
     <ServicePageLayout
       title="ServiceNow Platform Integration"
       description="Connect ServiceNow to your entire enterprise ecosystem. We build robust, scalable integrations that create seamless workflows and a single source of truth."
-      imageUrl="https://picsum.photos/1600/800?random=integration"
     >
       <div className="grid md:grid-cols-3 gap-12">
         <div className="md:col-span-2 space-y-8 text-gray-700">
@@ -49,7 +49,7 @@ const IntegrationPage: React.FC = () => {
             <ul className="mt-4 space-y-3">
                 {['HR Systems (e.g., Workday)', 'CRM (e.g., Salesforce)', 'ERP (e.g., SAP, Oracle)', 'DevOps Tools (e.g., Jira, Azure DevOps)', 'Cloud Providers (AWS, Azure, GCP)', 'IT Monitoring Tools', 'Communication Platforms (Slack, Teams)'].map(item => (
                     <li key={item} className="flex items-start">
-                         <svg className="flex-shrink-0 h-5 w-5 text-green-500 mr-2 mt-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" /></svg>
+                         <CheckCircle2 className="flex-shrink-0 h-5 w-5 text-green-500 mr-2 mt-1" />
                         <span className="text-gray-600">{item}</span>
                     </li>
                 ))}
