@@ -3,15 +3,7 @@ import { NavLink, Link } from 'react-router-dom';
 import Logo from './Logo';
 import { ChevronDown, Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-
-const serviceLinks = [
-    { name: 'ITSM', path: '/services/itsm' },
-    { name: 'ITOM', path: '/services/itom' },
-    { name: 'CSM', path: '/services/csm' },
-    { name: 'Custom App Development', path: '/services/custom-app-development' },
-    { name: 'Integration', path: '/services/integration' },
-    { name: 'Managed Services', path: '/services/managed-services' },
-];
+import { SERVICE_LINKS } from '../src/constants';
 
 const CustomNavLink: React.FC<{ to: string; children: React.ReactNode; onClick?: () => void; }> = ({ to, children, onClick }) => (
   <NavLink
@@ -29,13 +21,11 @@ const CustomNavLink: React.FC<{ to: string; children: React.ReactNode; onClick?:
   </NavLink>
 );
 
-
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isServicesMenuOpen, setServicesMenuOpen] = useState(false);
   const [isMobileServicesMenuOpen, setMobileServicesMenuOpen] = useState(false);
-
 
   useEffect(() => {
     const handleScroll = () => {
@@ -46,7 +36,11 @@ const Navbar: React.FC = () => {
   }, []);
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-white/80 shadow-md backdrop-blur-sm' : 'bg-white'}`}>
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      isScrolled 
+        ? 'bg-white/95 shadow-md backdrop-blur-sm' 
+        : 'bg-white'
+    }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           <div className="flex-shrink-0">
@@ -55,7 +49,7 @@ const Navbar: React.FC = () => {
             </Link>
           </div>
           <div className="hidden md:block">
-            <div className="ml-10 flex items-baseline space-x-4">
+            <div className="ml-10 flex items-center space-x-4">
               <CustomNavLink to="/">Home</CustomNavLink>
               <CustomNavLink to="/about">About Us</CustomNavLink>
               
@@ -83,9 +77,9 @@ const Navbar: React.FC = () => {
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: 10 }}
                       transition={{ duration: 0.2 }}
-                      className="absolute top-full left-0 mt-2 w-60 bg-white rounded-lg shadow-xl py-2 z-20"
+                      className="absolute top-full left-0 mt-2 w-64 bg-white rounded-lg shadow-xl py-2 z-20 border border-slate-100"
                     >
-                      {serviceLinks.map(link => (
+                      {SERVICE_LINKS.map(link => (
                         <Link
                           key={link.name}
                           to={link.path}
@@ -106,12 +100,14 @@ const Navbar: React.FC = () => {
           <div className="hidden md:block">
             <Link
                 to="/contact"
-                className="bg-brand-blue text-white px-4 py-2 rounded-lg font-medium hover:bg-opacity-90 transition-colors duration-300"
+                className="bg-brand-blue text-white px-4 py-2 rounded-lg font-medium hover:bg-opacity-90 transition-colors duration-300 shadow-sm"
             >
                 Get a Quote
             </Link>
           </div>
-          <div className="-mr-2 flex md:hidden">
+          
+          {/* Mobile Menu Button */}
+          <div className="-mr-2 flex md:hidden items-center gap-2">
             <button
               onClick={() => setIsOpen(!isOpen)}
               type="button"
@@ -130,8 +126,9 @@ const Navbar: React.FC = () => {
         </div>
       </div>
 
+      {/* Mobile Menu */}
       {isOpen && (
-        <div className="md:hidden" id="mobile-menu">
+        <div className="md:hidden bg-white border-b border-slate-200" id="mobile-menu">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
             <CustomNavLink to="/" onClick={() => setIsOpen(false)}>Home</CustomNavLink>
             <CustomNavLink to="/about" onClick={() => setIsOpen(false)}>About Us</CustomNavLink>
@@ -141,7 +138,6 @@ const Navbar: React.FC = () => {
               <NavLink 
                 to="/services"
                 onClick={(e) => {
-                    // Prevent navigation on accordion toggle, only toggle
                     e.preventDefault();
                     setMobileServicesMenuOpen(prev => !prev);
                 }}
@@ -153,7 +149,7 @@ const Navbar: React.FC = () => {
               </NavLink>
               {isMobileServicesMenuOpen && (
                 <div className="pl-7 mt-1 space-y-1">
-                  {serviceLinks.map(link => (
+                  {SERVICE_LINKS.map(link => (
                     <Link
                       key={link.name}
                       to={link.path}

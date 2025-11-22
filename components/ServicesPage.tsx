@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ClipboardList, Network, HeartHandshake, Blocks, Link as LucideLink, ServerCog, ArrowRight } from 'lucide-react';
+import { ClipboardList, Network, HeartHandshake, Blocks, Link as LucideLink, ArrowRight, ShieldAlert, Sparkles } from 'lucide-react';
 
 const ServiceCard: React.FC<{
   icon: React.ReactElement;
@@ -28,7 +28,7 @@ const ServiceCard: React.FC<{
         <h3 className="mt-6 text-xl font-semibold text-slate-800">{title}</h3>
         <p className="mt-2 text-slate-600 text-sm leading-relaxed">{description}</p>
       </div>
-      <div className="flex-grow"></div> {/* Pushes the link to the bottom */}
+      <div className="flex-grow"></div>
       <div className="mt-6">
         <span className="font-semibold text-brand-blue flex items-center gap-2 group-hover:gap-3 transition-all">
           Explore Service <ArrowRight className="h-4 w-4" />
@@ -41,51 +41,58 @@ const ServiceCard: React.FC<{
 const ServicesPage: React.FC = () => {
   const services = [
     {
-      title: "ServiceNow IT Service Management (ITSM)",
+      title: "ServiceNow ITSM",
       description:
         "Modernize your IT service delivery with best-practice ITSM solutions on the Now Platform.",
       icon: <ClipboardList className="h-6 w-6" />,
       linkTo: "/services/itsm",
     },
     {
-      title: "ServiceNow IT Operations Management (ITOM)",
+      title: "ServiceNow ITOM",
       description:
         "Gain visibility and control over your infrastructure and services with intelligent operations management.",
       icon: <Network className="h-6 w-6" />,
       linkTo: "/services/itom",
     },
     {
-      title: "ServiceNow Customer Service (CSM)",
+      title: "ServiceNow CSM",
       description:
-        "Connect your customer service from the front to the back office to resolve issues proactively and efficiently.",
+        "Connect your customer service from the front to the back office to resolve issues proactively.",
       icon: <HeartHandshake className="h-6 w-6" />,
       linkTo: "/services/csm",
     },
     {
-      title: "Custom Application Development",
+      title: "Custom App Development",
       description:
-        "Build powerful, custom business applications on the Now Platform to meet your unique needs and workflows.",
+        "Build powerful, custom business applications on the Now Platform to meet your unique needs.",
       icon: <Blocks className="h-6 w-6" />,
       linkTo: "/services/custom-app-development",
     },
     {
-      title: "ServiceNow Platform Integration",
+      title: "Platform Integration",
       description:
-        "Seamlessly connect ServiceNow with other enterprise systems to create a unified and efficient ecosystem.",
+        "Seamlessly connect ServiceNow with other enterprise systems to create a unified ecosystem.",
       icon: <LucideLink className="h-6 w-6" />,
       linkTo: "/services/integration",
     },
     {
-      title: "Managed Services & Support",
+      title: "Governance, Risk & Compliance",
       description:
-        "Ensure the health, performance, and continuous improvement of your ServiceNow instance with our dedicated support.",
-      icon: <ServerCog className="h-6 w-6" />,
-      linkTo: "/services/managed-services",
+        "Embed risk management and compliance into your daily workflows for real-time resilience.",
+      icon: <ShieldAlert className="h-6 w-6" />,
+      linkTo: "/services/grc",
+    },
+    {
+      title: "Now Assist (GenAI)",
+      description:
+        "Boost productivity and accelerate value with Generative AI experiences on the Now Platform.",
+      icon: <Sparkles className="h-6 w-6" />,
+      linkTo: "/services/now-assist",
     },
   ];
 
   return (
-    <div className="bg-slate-50 animate-fadeIn">
+    <div className="bg-slate-50 animate-fadeIn transition-colors duration-300">
       {/* Hero Section */}
       <section className="py-20 md:py-28 bg-white border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

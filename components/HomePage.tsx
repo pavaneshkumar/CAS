@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { Route, ShieldCheck, GaugeCircle, ClipboardList, ServerCog, Code, MapPin, Mail, Phone, CheckCircle2, ArrowRight } from 'lucide-react';
+import { Route, ShieldCheck, GaugeCircle, ClipboardList, ShieldAlert, Sparkles, MapPin, Mail, Phone, CheckCircle2, ArrowRight } from 'lucide-react';
+import { COMPANY_INFO } from "../src/constants";
 
 const AnimatedTitle = () => (
   <motion.h1
@@ -21,7 +22,7 @@ const AnimatedParagraph = () => (
         transition={{ duration: 0.5, delay: 0.2 }}
         className="mt-4 max-w-3xl mx-auto text-lg text-slate-600"
     >
-        CloudAdept Systems delivers expert ServiceNow implementation, development, and managed services to streamline your enterprise workflows and drive digital transformation.
+        {COMPANY_INFO.name} delivers expert ServiceNow implementation, development, and managed services to streamline your enterprise workflows and drive digital transformation.
     </motion.p>
 );
 
@@ -85,7 +86,7 @@ const HomePage: React.FC = () => {
     };
 
     return (
-        <div className="animate-fadeIn bg-slate-50">
+        <div className="animate-fadeIn bg-slate-50 transition-colors duration-300">
             {/* Hero Section */}
             <section className="bg-slate-50 py-24 md:py-32">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -113,17 +114,17 @@ const HomePage: React.FC = () => {
                             delay={0.1}
                         />
                         <ServiceHighlightCard
-                            icon={<ServerCog size={32} />}
-                            title="Managed Platform Services"
-                            description="Offload day-to-day administration and support of your ServiceNow instance to our certified experts."
-                            to="/services/managed-services"
+                            icon={<ShieldAlert size={32} />}
+                            title="GRC & Risk"
+                            description="Embed risk management and compliance into your daily workflows for real-time resilience."
+                            to="/services/grc"
                             delay={0.2}
                         />
                         <ServiceHighlightCard
-                            icon={<Code size={32} />}
-                            title="Custom App Development"
-                            description="Build powerful, custom business applications on the Now Platform to meet your unique needs."
-                            to="/services/custom-app-development"
+                            icon={<Sparkles size={32} />}
+                            title="Now Assist (GenAI)"
+                            description="Boost productivity and accelerate value with Generative AI experiences on the Now Platform."
+                            to="/services/now-assist"
                             delay={0.3}
                         />
                     </div>
@@ -134,7 +135,7 @@ const HomePage: React.FC = () => {
             <section className="py-20 bg-white">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="text-center">
-                        <h2 className="text-3xl md:text-4xl font-bold text-slate-900">Why Partner with CloudAdept?</h2>
+                        <h2 className="text-3xl md:text-4xl font-bold text-slate-900">Why Partner with {COMPANY_INFO.name}?</h2>
                         <p className="mt-4 text-lg text-slate-600 max-w-3xl mx-auto">We provide the ServiceNow expertise to elevate your business operations from every angle.</p>
                     </div>
                     <div className="mt-16 grid md:grid-cols-3 gap-8 text-center">
@@ -244,21 +245,21 @@ const HomePage: React.FC = () => {
                                 <MapPin className="h-8 w-8 text-brand-blue mt-1"/>
                                 <div className="ml-4">
                                     <h3 className="text-lg font-semibold text-slate-900">Our Office</h3>
-                                    <p className="mt-1 text-slate-600">Infantry Rd, Shivaji Nagar<br />Bengaluru, Karnataka 560001</p>
+                                    {COMPANY_INFO.addressLines.map((line, i) => <p key={i} className="mt-1 text-slate-600">{line}</p>)}
                                 </div>
                             </div>
                              <div className="flex items-start">
                                 <Mail className="h-8 w-8 text-brand-blue mt-1"/>
                                 <div className="ml-4">
                                     <h3 className="text-lg font-semibold text-slate-900">Email Us</h3>
-                                    <p className="mt-1 text-slate-600">cloudadeptsystems@gmail.com</p>
+                                    <p className="mt-1 text-slate-600">{COMPANY_INFO.email}</p>
                                 </div>
                             </div>
                              <div className="flex items-start">
                                 <Phone className="h-8 w-8 text-brand-blue mt-1"/>
                                 <div className="ml-4">
                                     <h3 className="text-lg font-semibold text-slate-900">Call Us</h3>
-                                    <p className="mt-1 text-slate-600">(+91) 703-256-5006</p>
+                                    <p className="mt-1 text-slate-600">{COMPANY_INFO.phone}</p>
                                 </div>
                             </div>
                         </div>

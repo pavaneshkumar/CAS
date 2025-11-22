@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { CheckCircle2, MapPin, Mail, Phone, Building } from "lucide-react";
+import { COMPANY_INFO } from "../src/constants";
 
 const ContactInfoItem: React.FC<{ icon: React.ReactElement; title: string; children: React.ReactNode; }> = ({ icon, title, children }) => (
     <div className="flex items-start">
@@ -26,7 +27,7 @@ const ContactPage: React.FC = () => {
     };
 
     return (
-        <div className="bg-slate-50 animate-fadeIn">
+        <div className="bg-slate-50 animate-fadeIn transition-colors duration-300">
             {/* Hero Section */}
             <section className="py-20 md:py-28 bg-white border-b border-slate-200">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -59,18 +60,17 @@ const ContactPage: React.FC = () => {
                             <h2 className="text-3xl font-bold text-slate-900 mb-8">Contact Information</h2>
                             <div className="space-y-8">
                                 <ContactInfoItem icon={<Building size={24} />} title="Our Office">
-                                    <p>Infantry Rd, Shivaji Nagar</p>
-                                    <p>Bengaluru, Karnataka 560001</p>
+                                    {COMPANY_INFO.addressLines.map((line, i) => <p key={i}>{line}</p>)}
                                 </ContactInfoItem>
                                 <ContactInfoItem icon={<Mail size={24} />} title="Email Us">
-                                    <a href="mailto:cloudadeptsystems@gmail.com" className="hover:text-brand-blue transition">cloudadeptsystems@gmail.com</a>
+                                    <a href={`mailto:${COMPANY_INFO.email}`} className="hover:text-brand-blue transition">{COMPANY_INFO.email}</a>
                                 </ContactInfoItem>
                                 <ContactInfoItem icon={<Phone size={24} />} title="Call Us">
-                                    <a href="tel:+917032565006" className="hover:text-brand-blue transition">(+91) 703-256-5006</a>
+                                    <a href={`tel:${COMPANY_INFO.phone}`} className="hover:text-brand-blue transition">{COMPANY_INFO.phone}</a>
                                 </ContactInfoItem>
                             </div>
                             <div className="mt-12 rounded-lg overflow-hidden h-64 shadow-md bg-slate-200 flex items-center justify-center">
-                                <img src="https://img-wrapper.vercel.app/image?url=https://placehold.co/800x600/e2e8f0/64748b?text=Our+Location" alt="Map showing office location" className="w-full h-full object-cover"/>
+                                <img src={COMPANY_INFO.mapUrl} alt="Map showing office location" className="w-full h-full object-cover"/>
                             </div>
                         </motion.div>
 
